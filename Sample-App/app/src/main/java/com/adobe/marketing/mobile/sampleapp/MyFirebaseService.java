@@ -14,10 +14,12 @@ import android.os.IBinder;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.adobe.marketing.mobile.Messaging;
 import com.adobe.marketing.mobile.MobileCore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
 import java.util.Random;
 
 public class MyFirebaseService extends FirebaseMessagingService {
@@ -57,7 +59,18 @@ public class MyFirebaseService extends FirebaseMessagingService {
             body = remoteMessage.getNotification().getBody();
         }
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Map<String, String> data = remoteMessage.getData();
+
+        Intent intent;
+
+        if (data.containsKey("deeplink")) {
+            intent = new Intent(this, MessagingDeeplinkActivity.class);
+        } else {
+            intent = new Intent(this, MenuActivity.class);
+        }
+
+        Messaging.addPushTrackingDetails(intent, remoteMessage.getMessageId(), data);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

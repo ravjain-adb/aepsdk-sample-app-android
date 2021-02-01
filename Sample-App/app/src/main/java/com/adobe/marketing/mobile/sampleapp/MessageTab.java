@@ -49,7 +49,6 @@ public class MessageTab extends Fragment {
     EditText etCustomEvent;
 
     private static final String LOG_TAG = "Assurance Tab";
-    private static final String CUSTOM_ACTION_DATASET = "60146f1f6fb6ae19481833cb";
 
     public MessageTab() {
         // Required empty public constructor
@@ -96,7 +95,7 @@ public class MessageTab extends Fragment {
         xdm.put("_aemonacpprodcampaign", aemMap);
 
         if (!customActionValue.isEmpty()) {
-            ExperienceEvent event = new ExperienceEvent.Builder().setData(null).setXdmSchema(xdm, CUSTOM_ACTION_DATASET).build();
+            ExperienceEvent event = new ExperienceEvent.Builder().setData(null).setXdmSchema(xdm, MainApp.CUSTOM_ACTION_DATASET).build();
             Edge.sendEvent(event, new EdgeCallback() {
                 @Override
                 public void onComplete(List<EdgeEventHandle> list) {
