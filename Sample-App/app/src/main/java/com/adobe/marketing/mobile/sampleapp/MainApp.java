@@ -12,6 +12,7 @@ import com.adobe.marketing.mobile.AdobeCallback;
 
 import com.adobe.marketing.mobile.Assurance;
 import com.adobe.marketing.mobile.Edge;
+import com.adobe.marketing.mobile.Messaging;
 import com.adobe.marketing.mobile.MobileCore;
 import com.adobe.marketing.mobile.Identity;
 import com.adobe.marketing.mobile.Lifecycle;
@@ -20,33 +21,36 @@ import com.adobe.marketing.mobile.Signal;
 import com.adobe.marketing.mobile.UserProfile;
 import com.adobe.marketing.mobile.InvalidInitException;
 import com.adobe.marketing.mobile.LoggingMode;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainApp extends Application {
 
     private static final String LOG_TAG = "MainApp";
-    private static final String LAUNCH_ENVIRONMENT_FILE_ID = "";
-
-    private static Context context;
-    public static Context getAppContext(){
-        return MainApp.context;
-    }
+    private static final String LAUNCH_ENVIRONMENT_FILE_ID = "3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
+    static final String PLATFORM_DCS_URL = "https://dcs.adobedc.net/collection/e28b94f7b68e32480ab10e4880bedb7a51c17b54e2275978cff915ae61f28070";
+    static final String PLATFORM_PROFILE_DATASET_ID = "601460f70085b8194b6aac02";
+    static final String ORG_ID = "906E3A095DC834230A495FD6@AdobeOrg";
+    private static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID = "6014611ed9a0041949769e17";
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
-
-        MainApp.context = getApplicationContext();
-
         MobileCore.setApplication(this);
         MobileCore.setLogLevel(LoggingMode.VERBOSE);
         MobileCore.setSmallIconResourceID(R.mipmap.ic_launcher_round);
         MobileCore.setLargeIconResourceID(R.mipmap.ic_launcher_round);
 
-        try{
+        try {
             Analytics.registerExtension();
             UserProfile.registerExtension();
             Identity.registerExtension();
@@ -54,19 +58,38 @@ public class MainApp extends Application {
             Signal.registerExtension();
             Edge.registerExtension();
             Assurance.registerExtension();
+            Messaging.registerExtension();
 
             MobileCore.configureWithAppID(LAUNCH_ENVIRONMENT_FILE_ID);
-            MobileCore.start(new AdobeCallback () {
 
+            MobileCore.start(new AdobeCallback() {
+                @Override
+                public void call(Object o) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("messaging.dccs", PLATFORM_DCS_URL);
+                    map.put("messaging.profileDataset", PLATFORM_PROFILE_DATASET_ID);
+                    map.put("messaging.eventDataset", PLATFORM_EXPERIENCE_EVENT_DATASET_ID);
+                    MobileCore.updateConfiguration(map);
+                    Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
+                }
+            });
+        } catch (InvalidInitException e) {
+            e.printStackTrace();
+        }
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
-                    public void call(Object o) {
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(LOG_TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
-                        Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
-
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        MobileCore.setPushIdentifier(token);
                     }
                 });
-                 } catch (InvalidInitException e) {
-                    e.printStackTrace();
-            }
     }
 }

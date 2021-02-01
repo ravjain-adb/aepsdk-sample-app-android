@@ -51,14 +51,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Get the URI from the data elements of the applications intent com.adobe.marketing.mobile.sampleapp.MainActivity
-        final Intent intent = getIntent();
-        final Uri data = intent.getData();
-
-        if (data != null) {
-            Log.d(LOG_TAG, "Connected successfully to Assurance with the URI : " + data.toString());
-        }
-
+        Intent intent = getIntent();
+        int tab = intent.getIntExtra("TAB", 1);
 
         //Set up the tab system
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
@@ -66,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         pagerAdapter = new PageAdapter(getSupportFragmentManager(), getApplicationContext(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+
+        viewPager.setCurrentItem(tab, true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
@@ -104,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 Map<String, String> additionalContextData = new HashMap<String, String>();
                 MobileCore.trackState(tab.getText().toString(), null);
-
-
             }
 
             @Override

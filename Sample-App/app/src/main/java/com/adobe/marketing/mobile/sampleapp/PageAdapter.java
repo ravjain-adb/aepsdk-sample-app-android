@@ -24,7 +24,8 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     private Fragment[] tabFragments = new Fragment[] {
             new AssuranceTab(),
             new AnalyticsTab(),
-            new EdgeTab()
+            new EdgeTab(),
+            new MessageTab()
     };
 
     public PageAdapter(FragmentManager fm, final Context context, int numOfTabs) {
@@ -33,7 +34,8 @@ public class PageAdapter extends FragmentStatePagerAdapter {
         tabTitles = new String[] {
                 context.getString(R.string.tab_Assurance),
                 context.getString(R.string.tab_Core),
-                context.getString(R.string.tab_Edge)
+                context.getString(R.string.tab_Edge),
+                "Message"
         };
     }
 

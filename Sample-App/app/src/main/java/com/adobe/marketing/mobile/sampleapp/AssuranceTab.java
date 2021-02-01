@@ -68,7 +68,6 @@ public class AssuranceTab extends Fragment implements NavigationAware {
     @Override
     public void OnNavigateTo() {
         userIsViewingThisFragment = true;
-
     }
 
     @Override

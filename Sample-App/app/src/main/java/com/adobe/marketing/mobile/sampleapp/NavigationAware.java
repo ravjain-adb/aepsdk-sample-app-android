@@ -9,7 +9,6 @@
 package com.adobe.marketing.mobile.sampleapp;
 
 public interface NavigationAware {
-
     void OnNavigateTo();
     void OnNavigateAway();
 }

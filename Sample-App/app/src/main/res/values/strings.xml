@@ -3,6 +3,7 @@
     <string name="titleText">AEP Mobile SDK Sample App</string>
 
     <string name="tab_Assurance">Assurance</string>
+    <string name="tab_messaging">Messaging</string>
     <string name="tab_Analytics">Analytics</string>
     <string name="tab_Core">Core</string>
 

@@ -77,7 +77,7 @@ public class AnalyticsTab extends Fragment implements NavigationAware {
                 if (toast != null) {
                     toast.cancel();
                 }
-                toast = Toast.makeText(MainApp.getAppContext(), message, Toast.LENGTH_LONG);
+                toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
                 toast.show();
             }
         });
