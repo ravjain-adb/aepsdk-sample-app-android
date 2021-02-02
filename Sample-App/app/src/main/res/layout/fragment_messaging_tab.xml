@@ -29,7 +29,7 @@
                     android:id="@+id/tv_lbl_enterProfileData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Enter the profile name"
+                    android:text="Give a name for personalization"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:text="Update"
+                    android:text="Update Name in AEP profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_profileData" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -73,7 +73,7 @@
                     android:id="@+id/tv_lbl_EnterCustomEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Enter the Custom event"
+                    android:text="Enter the string matching your custom action in CJM"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
                     android:layout_marginTop="10dp"
                     android:ems="10"
                     android:inputType="text"
-                    android:text=""
+                    android:text="CustomAction"
                     app:layout_constraintTop_toBottomOf="@+id/tv_lbl_EnterCustomEvent" />
 
                 <Button
