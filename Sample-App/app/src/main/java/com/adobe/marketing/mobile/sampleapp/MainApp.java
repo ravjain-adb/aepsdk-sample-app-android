@@ -36,16 +36,23 @@ import java.util.Map;
 public class MainApp extends Application {
 
     private static final String LOG_TAG = "MainApp";
-    private static final String LAUNCH_ENVIRONMENT_FILE_ID = "";
-    static final String PLATFORM_DCS_URL = "";
-    // Profile dataset id used by messaging for syncing the push toke with profile
-    static final String PLATFORM_PROFILE_DATASET_ID = "";
-    // Org id needed by the messaging tab to send the custom event
-    static final String ORG_ID = "";
-    // Experience event dataset id used by messaging for sending tracking data
-    private static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID = "";
-    // Dataset id used by the messaging tab to send a custom action event.
-    static final String CUSTOM_ACTION_DATASET = "";
+//    private static final String LAUNCH_ENVIRONMENT_FILE_ID = "";
+//    static final String PLATFORM_DCS_URL = "";
+//    // Profile dataset id used by messaging for syncing the push toke with profile
+//    static final String PLATFORM_PROFILE_DATASET_ID = "";
+//    // Org id needed by the messaging tab to send the custom event
+//    static final String ORG_ID = "";
+//    // Experience event dataset id used by messaging for sending tracking data
+//    private static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID = "";
+//    // Dataset id used by the messaging tab to send a custom action event.
+//    static final String CUSTOM_ACTION_DATASET = "";
+
+    private static final String LAUNCH_ENVIRONMENT_FILE_ID="3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
+    static final String PLATFORM_DCS_URL="https://dcs.adobedc.net/collection/e28b94f7b68e32480ab10e4880bedb7a51c17b54e2275978cff915ae61f28070";
+    static final String PLATFORM_PROFILE_DATASET_ID="601460f70085b8194b6aac02";
+    static final String ORG_ID="906E3A095DC834230A495FD6@AdobeOrg";
+    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="6014611ed9a0041949769e17";
+    static final String CUSTOM_ACTION_DATASET="60146f1f6fb6ae19481833cb";
 
     @Override
     public void onCreate() {
@@ -65,11 +72,14 @@ public class MainApp extends Application {
             Assurance.registerExtension();
             Messaging.registerExtension();
 
-            MobileCore.configureWithAppID(LAUNCH_ENVIRONMENT_FILE_ID);
-
             MobileCore.start(new AdobeCallback() {
                 @Override
                 public void call(Object o) {
+
+                    MobileCore.configureWithAppID(LAUNCH_ENVIRONMENT_FILE_ID);
+
+                    MobileCore.lifecycleStart(null);
+
                     Map<String, Object> map = new HashMap<>();
                     map.put("messaging.dccs", PLATFORM_DCS_URL);
                     map.put("messaging.profileDataset", PLATFORM_PROFILE_DATASET_ID);
