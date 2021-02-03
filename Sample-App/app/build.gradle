@@ -32,7 +32,7 @@ dependencies {
     implementation 'com.adobe.marketing.mobile:userprofile:1.1.0'
     implementation 'com.adobe.marketing.mobile:sdk-core:1.5.7'
     implementation 'com.adobe.marketing.mobile:assurance:1.0.1'
-    implementation 'com.adobe.marketing.mobile:edge:1.+'
+    //implementation 'com.adobe.marketing.mobile:edge:1.+'
     implementation 'com.adobe.marketing.mobile:analyticsedge:1.+'
 
     implementation platform('com.google.firebase:firebase-bom:26.4.0')
