@@ -29,7 +29,7 @@
                     android:id="@+id/tv_lbl_enterProfileData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Give a name for personalization"
+                    android:text="Give an email for personalization"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
