@@ -124,7 +124,7 @@ public class MessageTab extends Fragment {
                 "        \"source\": {\n" +
                 "            \"name\": \"mobile\"\n" +
                 "        },\n" +
-                "        \"datasetId\": \"" + MainApp.PLATFORM_PROFILE_DATASET_ID +"\"\n" +
+                "        \"datasetId\": \"" + MainApp.CUSTOM_PROFILE_DATASET +"\"\n" +
                 "    },\n" +
                 "    \"body\": {\n" +
                 "        \"xdmEntity\": {\n" +
@@ -135,9 +135,12 @@ public class MessageTab extends Fragment {
                 "                    }\n" +
                 "                ]\n" +
                 "            },\n" +
-                "            \"personID\": \"" + profileName +"\"\n" +
-                "        }\n" +
-                "    }\n" +
+                "      \"testProfile\": true,\n" +
+                "         \"personalEmail\": {\n" +
+                "         \t\"address\": \"" + profileName +"\"\n" +
+                "       }\n" +
+                "      }\n" +
+                "   }\n" +
                 "}";
     }
 }

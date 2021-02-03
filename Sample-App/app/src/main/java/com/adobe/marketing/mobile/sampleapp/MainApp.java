@@ -53,6 +53,7 @@ public class MainApp extends Application {
     static final String ORG_ID="906E3A095DC834230A495FD6@AdobeOrg";
     static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="6014611ed9a0041949769e17";
     static final String CUSTOM_ACTION_DATASET="60146f1f6fb6ae19481833cb";
+    static final String CUSTOM_PROFILE_DATASET="601a5860812a35194ac49baa";
 
     @Override
     public void onCreate() {
