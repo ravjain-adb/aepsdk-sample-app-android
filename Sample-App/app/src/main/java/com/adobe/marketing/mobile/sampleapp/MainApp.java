@@ -87,6 +87,9 @@ public class MainApp extends Application {
                     map.put("messaging.eventDataset", PLATFORM_EXPERIENCE_EVENT_DATASET_ID);
                     MobileCore.updateConfiguration(map);
                     Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
+
+                    // To connect with Assurance session on start, put the URL for your session here
+                    Assurance.startSession("aepsdksampleapp://?adb_validation_sessionid=2898a9e3-a9ae-47cb-a2e0-7bd267fa70e5");
                 }
             });
         } catch (InvalidInitException e) {
