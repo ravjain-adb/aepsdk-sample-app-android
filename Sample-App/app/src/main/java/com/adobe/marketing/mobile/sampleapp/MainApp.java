@@ -10,7 +10,7 @@ package com.adobe.marketing.mobile.sampleapp;
 
 import com.adobe.marketing.mobile.AdobeCallback;
 
-import com.adobe.marketing.mobile.Assurance;
+//import com.adobe.marketing.mobile.Assurance;
 import com.adobe.marketing.mobile.Edge;
 import com.adobe.marketing.mobile.Messaging;
 import com.adobe.marketing.mobile.MobileCore;
@@ -48,12 +48,12 @@ public class MainApp extends Application {
 //    static final String CUSTOM_ACTION_DATASET = "";
 
     private static final String LAUNCH_ENVIRONMENT_FILE_ID="3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
-    static final String PLATFORM_DCS_URL="https://dcs.adobedc.net/collection/e28b94f7b68e32480ab10e4880bedb7a51c17b54e2275978cff915ae61f28070";
-    static final String PLATFORM_PROFILE_DATASET_ID="601460f70085b8194b6aac02";
-    static final String ORG_ID="906E3A095DC834230A495FD6@AdobeOrg";
-    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="6014611ed9a0041949769e17";
-    static final String CUSTOM_ACTION_DATASET="60146f1f6fb6ae19481833cb";
-    static final String CUSTOM_PROFILE_DATASET="601a5860812a35194ac49baa";
+    static final String PLATFORM_DCS_URL="https://dcs-stg.adobedc.net/collection/0e8fa7ee477ffbdc8d26f626a76702112b501ea296ec18b25ee09a117d6ccaf7";
+    static final String PLATFORM_PROFILE_DATASET_ID="600928fa2a40c918db2e8db6";
+    static final String ORG_ID="745F37C35E4B776E0A49421B@AdobeOrg";
+    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="600928f915a07918dcb91605";
+    static final String CUSTOM_ACTION_DATASET="601b6f1fd976ed18db4a24fc";
+    static final String CUSTOM_PROFILE_DATASET="601b6fda97ce4a18db9916b7";
 
     @Override
     public void onCreate() {
@@ -70,7 +70,7 @@ public class MainApp extends Application {
             Lifecycle.registerExtension();
             Signal.registerExtension();
             Edge.registerExtension();
-            Assurance.registerExtension();
+            //Assurance.registerExtension();
             Messaging.registerExtension();
 
             MobileCore.start(new AdobeCallback() {
@@ -89,7 +89,7 @@ public class MainApp extends Application {
                     Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
 
                     // To connect with Assurance session on start, put the URL for your session here
-                    Assurance.startSession("aepsdksampleapp://?adb_validation_sessionid=2898a9e3-a9ae-47cb-a2e0-7bd267fa70e5");
+                   // Assurance.startSession("aepsdksampleapp://?adb_validation_sessionid=c857e06a-90e7-45ba-adb3-b1d7f9612600");
                 }
             });
         } catch (InvalidInitException e) {

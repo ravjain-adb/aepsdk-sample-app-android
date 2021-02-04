@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.adobe.marketing.mobile.Assurance;
+//import com.adobe.marketing.mobile.Assurance;
 
 
 /**
@@ -59,7 +59,7 @@ public class AssuranceTab extends Fragment implements NavigationAware {
         btnConnectToAssuranceSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Assurance.startSession(txtAssuranceSessionURL.getText().toString());
+               // Assurance.startSession(txtAssuranceSessionURL.getText().toString());
             }
         });
 
