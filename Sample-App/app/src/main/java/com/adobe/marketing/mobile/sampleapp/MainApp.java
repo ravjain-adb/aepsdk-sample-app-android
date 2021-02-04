@@ -36,16 +36,6 @@ import java.util.Map;
 public class MainApp extends Application {
 
     private static final String LOG_TAG = "MainApp";
-//    private static final String LAUNCH_ENVIRONMENT_FILE_ID = "";
-//    static final String PLATFORM_DCS_URL = "";
-//    // Profile dataset id used by messaging for syncing the push toke with profile
-//    static final String PLATFORM_PROFILE_DATASET_ID = "";
-//    // Org id needed by the messaging tab to send the custom event
-//    static final String ORG_ID = "";
-//    // Experience event dataset id used by messaging for sending tracking data
-//    private static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID = "";
-//    // Dataset id used by the messaging tab to send a custom action event.
-//    static final String CUSTOM_ACTION_DATASET = "";
 
     private static final String LAUNCH_ENVIRONMENT_FILE_ID="3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
     static final String PLATFORM_DCS_URL="https://dcs-stg.adobedc.net/collection/0e8fa7ee477ffbdc8d26f626a76702112b501ea296ec18b25ee09a117d6ccaf7";
@@ -72,7 +62,6 @@ public class MainApp extends Application {
             Edge.registerExtension();
             //Assurance.registerExtension();
             Messaging.registerExtension();
-
             MobileCore.start(new AdobeCallback() {
                 @Override
                 public void call(Object o) {
@@ -85,6 +74,7 @@ public class MainApp extends Application {
                     map.put("messaging.dccs", PLATFORM_DCS_URL);
                     map.put("messaging.profileDataset", PLATFORM_PROFILE_DATASET_ID);
                     map.put("messaging.eventDataset", PLATFORM_EXPERIENCE_EVENT_DATASET_ID);
+                    map.put("experienceCloud.org", ORG_ID);
                     MobileCore.updateConfiguration(map);
                     Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
 
