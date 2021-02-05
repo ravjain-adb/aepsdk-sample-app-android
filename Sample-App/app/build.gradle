@@ -30,7 +30,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     implementation 'com.adobe.marketing.mobile:userprofile:1.1.0'
-    implementation 'com.adobe.marketing.mobile:sdk-core:1.5.7'
+    implementation 'com.adobe.marketing.mobile:sdk-core:1.5.8'
     implementation 'com.adobe.marketing.mobile:assurance:1.0.1'
     implementation 'com.adobe.marketing.mobile:edge:1.+'
     implementation 'com.adobe.marketing.mobile:analyticsedge:1.+'
