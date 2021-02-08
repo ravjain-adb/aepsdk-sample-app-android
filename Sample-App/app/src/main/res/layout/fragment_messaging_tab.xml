@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img2"
@@ -26,7 +27,7 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/tv_lbl_enterProfileData"
+                    android:id="@+id/tv_lbl_emailLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Give an email for personalization"
@@ -37,72 +38,110 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/et_profileData"
+                    android:id="@+id/et_emailText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ems="10"
                     android:inputType="text"
                     android:text=""
-                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_enterProfileData" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_emailLabel" />
+
+                <TextView
+                    android:id="@+id/tv_lbl_firstnameLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Give an firstName for personalization"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/et_emailText" />
+
+                <EditText
+                    android:id="@+id/et_firstNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text=""
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_firstnameLabel" />
+
+                <TextView
+                    android:id="@+id/tv_lbl_lastNameLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Give an lastName for personalization"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/et_firstNameText"  />
+
+                <EditText
+                    android:id="@+id/et_lastNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text=""
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_lastNameLabel" />
+
+                <TextView
+                    android:id="@+id/tv_lbl_fullNameLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Give an fullName for personalization"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/et_lastNameText"  />
+
+                <EditText
+                    android:id="@+id/et_fullNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text=""
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_fullNameLabel" />
 
                 <Button
                     android:id="@+id/btn_updateProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:gravity="center"
-                    android:text="Update Name in AEP profile"
+                    android:text="Update AEP profile"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_profileData" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_lastNameText" />
+
+                <TextView
+                    android:id="@+id/tv_lbl_ecidLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This profile's ecid is"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_updateProfile"  />
+
+                <EditText
+                    android:id="@+id/et_ecIDText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textIsSelectable="true"
+                    android:text=""
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_ecidLabel" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cv_customEvent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/tv_lbl_EnterCustomEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Enter the string matching your custom action in CJM"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/et_customEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:text="CustomAction"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_EnterCustomEvent" />
-
-                <Button
-                    android:id="@+id/btn_sendEvent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Send"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_customEvent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
     </ScrollView>

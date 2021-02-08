@@ -27,6 +27,7 @@ import com.adobe.marketing.mobile.EdgeCallback;
 import com.adobe.marketing.mobile.EdgeEventHandle;
 import com.adobe.marketing.mobile.ExperienceEvent;
 import com.adobe.marketing.mobile.Identity;
+import com.adobe.marketing.mobile.MobileCore;
 import com.adobe.marketing.mobile.SampleAppNetworkConnection;
 
 import org.json.JSONException;
@@ -44,11 +45,14 @@ import java.util.Map;
 public class MessageTab extends Fragment {
 
     Button btnUpdateProfile;
-    EditText etProfileName;
-    Button btnSend;
-    EditText etCustomEvent;
+    EditText etEmail;
+    EditText etFirstName;
+    EditText etLastName;
+    EditText etFullName;
+    EditText etECID;
 
-    private static final String LOG_TAG = "Assurance Tab";
+
+    private static final String LOG_TAG = "Messaging Tab";
 
     public MessageTab() {
         // Required empty public constructor
@@ -63,19 +67,13 @@ public class MessageTab extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         //Create references to all our components
-        btnSend = view.findViewById(R.id.btn_sendEvent);
         btnUpdateProfile = view.findViewById(R.id.btn_updateProfile);
-        etCustomEvent = view.findViewById(R.id.et_customEvent);
-        etProfileName = view.findViewById(R.id.et_profileData);
+        etEmail = view.findViewById(R.id.et_emailText);
+        etFirstName = view.findViewById(R.id.et_firstNameText);
+        etLastName = view.findViewById(R.id.et_lastNameText);
+        etFullName = view.findViewById(R.id.et_fullNameText);
+        etECID = view.findViewById(R.id.et_ecIDText);
 
-
-        //Setup button events
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendCustomExperienceEvent();
-            }
-        });
 
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,41 +81,36 @@ public class MessageTab extends Fragment {
                 updateProfile();
             }
         });
+
     }
 
-    private void sendCustomExperienceEvent() {
-        String customActionValue = etCustomEvent.getText().toString();
-
-        Map<String, Object> xdm = new HashMap<>();
-        xdm.put("eventType", "customAction");
-        Map<String, Object> aemMap = new HashMap<>();
-        aemMap.put("custom_action", customActionValue);
-        xdm.put("_aemonacpprodcampaign", aemMap);
-
-        if (!customActionValue.isEmpty()) {
-            ExperienceEvent event = new ExperienceEvent.Builder().setData(null).setXdmSchema(xdm, MainApp.CUSTOM_ACTION_DATASET).build();
-            Edge.sendEvent(event, new EdgeCallback() {
-                @Override
-                public void onComplete(List<EdgeEventHandle> list) {
-                    Log.d(LOG_TAG, "onComplete");
-                }
-            });
-        }
-    }
 
     private void updateProfile() {
-        final String profileName = etProfileName.getText().toString();
+        final String profileEmail = etEmail.getText().toString();
+        final String profileFirstName = etFirstName.getText().toString();
+        final String profileLastName = etLastName.getText().toString();
+        final String profileFullName = etFullName.getText().toString();
+
+
         Identity.getExperienceCloudId(new AdobeCallback<String>() {
             @Override
-            public void call(String s) {
-                final String payload = getProfileUpdatePayload(profileName, s);
+            public void call(final String ecid) {
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        etECID.setText(ecid);
+                    }
+                });
+                final String payload = getProfileUpdatePayload(profileEmail,profileFirstName,profileLastName, profileFullName, ecid);
+                Log.d(LOG_TAG, payload);
                 SampleAppNetworkConnection connection = new SampleAppNetworkConnection();
                 connection.connectPostUrl(MainApp.PLATFORM_DCS_URL, payload.getBytes());
             }
         });
     }
 
-    private String getProfileUpdatePayload(String profileName, String ecid) {
+    private String getProfileUpdatePayload(String email, String firstName, String lastName, String fullName, String ecid) {
         return "{\n" +
                 "    \"header\" : {\n" +
                 "        \"imsOrgId\": \"" + MainApp.ORG_ID + "\",\n" +
@@ -133,12 +126,24 @@ public class MessageTab extends Fragment {
                 "                    {\n" +
                 "                        \"id\" : \"" + ecid +"\"\n" +
                 "                    }\n" +
+                "                ],\n" +
+                "                \"Email\": [\n" +
+                "                    {\n" +
+                "                        \"id\" : \"" + email +"\"\n" +
+                "                    }\n" +
                 "                ]\n" +
                 "            },\n" +
                 "      \"testProfile\": true,\n" +
                 "         \"personalEmail\": {\n" +
-                "         \t\"address\": \"" + profileName +"\"\n" +
-                "       }\n" +
+                "         \t\"address\": \"" + email +"\"\n" +
+                "         },\n" +
+                "         \"person\": {\n" +
+                "              \"name\": {\n" +
+                "              \"firstName\": \"" + firstName + "\",\n" +
+                "              \"lastName\": \"" + lastName + "\",\n" +
+                "              \"fullName\": \"" + fullName  + "\"\n" +
+                "              }\n" +
+                "          }\n" +
                 "      }\n" +
                 "   }\n" +
                 "}";

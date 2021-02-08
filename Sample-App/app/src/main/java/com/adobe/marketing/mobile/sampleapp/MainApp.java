@@ -38,12 +38,13 @@ public class MainApp extends Application {
     private static final String LOG_TAG = "MainApp";
 
     private static final String LAUNCH_ENVIRONMENT_FILE_ID="3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
-    static final String PLATFORM_DCS_URL="https://dcs-stg.adobedc.net/collection/0e8fa7ee477ffbdc8d26f626a76702112b501ea296ec18b25ee09a117d6ccaf7";
-    static final String PLATFORM_PROFILE_DATASET_ID="600928fa2a40c918db2e8db6";
-    static final String ORG_ID="745F37C35E4B776E0A49421B@AdobeOrg";
-    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="600928f915a07918dcb91605";
-    static final String CUSTOM_ACTION_DATASET="601b6f1fd976ed18db4a24fc";
-    static final String CUSTOM_PROFILE_DATASET="601b6fda97ce4a18db9916b7";
+
+    // FOR 'CJM MR' sandbox - get values from wiki page provide https://wiki.corp.adobe.com/display/adms/Using+AEPSample+App+for+testing+Messaging+in+Alpha-3
+    static final String ORG_ID="";
+    static final String PLATFORM_DCS_URL="";
+    static final String PLATFORM_PROFILE_DATASET_ID="";
+    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="";
+    static final String CUSTOM_PROFILE_DATASET="";
 
     @Override
     public void onCreate() {
