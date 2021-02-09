@@ -108,11 +108,11 @@
                     android:id="@+id/btn_updateProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
                     android:gravity="center"
                     android:text="Update AEP profile"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_lastNameText" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_fullNameText" />
 
                 <TextView
                     android:id="@+id/tv_lbl_ecidLabel"
@@ -123,13 +123,12 @@
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@+id/btn_updateProfile"  />
 
-                <EditText
-                    android:id="@+id/et_ecIDText"
+                <TextView
+                    android:id="@+id/tv_ecIDText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:ems="10"
-                    android:inputType="text"
+                    android:textSize="18sp"
                     android:textIsSelectable="true"
                     android:text=""
                     app:layout_constraintTop_toBottomOf="@+id/tv_lbl_ecidLabel" />

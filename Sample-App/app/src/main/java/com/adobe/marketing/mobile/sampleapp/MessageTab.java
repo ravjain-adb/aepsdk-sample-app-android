@@ -11,6 +11,8 @@ package com.adobe.marketing.mobile.sampleapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -34,6 +36,7 @@ import com.adobe.marketing.mobile.SampleAppNetworkConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,7 +54,9 @@ public class MessageTab extends Fragment {
     EditText etFirstName;
     EditText etLastName;
     EditText etFullName;
-    EditText etECID;
+    TextView tvECID;
+
+    String ecidValue;
 
 
     private static final String LOG_TAG = "Messaging Tab";
@@ -74,7 +79,7 @@ public class MessageTab extends Fragment {
         etFirstName = view.findViewById(R.id.et_firstNameText);
         etLastName = view.findViewById(R.id.et_lastNameText);
         etFullName = view.findViewById(R.id.et_fullNameText);
-        etECID = view.findViewById(R.id.et_ecIDText);
+        tvECID = view.findViewById(R.id.tv_ecIDText);
 
 
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +89,23 @@ public class MessageTab extends Fragment {
                 hideKeyboard(getActivity());
             }
         });
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Identity.getExperienceCloudId(new AdobeCallback<String>() {
+            @Override
+            public void call(final String ecid) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ecidValue = ecid;
+                        tvECID.setText(ecidValue);
+                    }
+                });
+            }
+        });
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -105,23 +126,10 @@ public class MessageTab extends Fragment {
         final String profileLastName = etLastName.getText().toString();
         final String profileFullName = etFullName.getText().toString();
 
-
-        Identity.getExperienceCloudId(new AdobeCallback<String>() {
-            @Override
-            public void call(final String ecid) {
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        etECID.setText(ecid);
-                    }
-                });
-                final String payload = getProfileUpdatePayload(profileEmail,profileFirstName,profileLastName, profileFullName, ecid);
-                Log.d(LOG_TAG, payload);
-                SampleAppNetworkConnection connection = new SampleAppNetworkConnection();
-                connection.connectPostUrl(MainApp.PLATFORM_DCS_URL, payload.getBytes());
-            }
-        });
+        final String payload = getProfileUpdatePayload(profileEmail,profileFirstName,profileLastName, profileFullName, ecidValue);
+        Log.d(LOG_TAG, payload);
+        SampleAppNetworkConnection connection = new SampleAppNetworkConnection();
+        connection.connectPostUrl(MainApp.PLATFORM_DCS_URL, payload.getBytes());
     }
 
     private String getProfileUpdatePayload(String email, String firstName, String lastName, String fullName, String ecid) {
