@@ -15,6 +15,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,10 +129,19 @@ public class MessageTab extends Fragment {
         final String profileLastName = etLastName.getText().toString();
         final String profileFullName = etFullName.getText().toString();
 
-        final String payload = getProfileUpdatePayload(profileEmail,profileFirstName,profileLastName, profileFullName, ecidValue);
-        Log.d(LOG_TAG, payload);
-        SampleAppNetworkConnection connection = new SampleAppNetworkConnection();
-        connection.connectPostUrl(MainApp.PLATFORM_DCS_URL, payload.getBytes());
+        HandlerThread ht = new HandlerThread("Bgthread");
+        ht.start();
+        Looper looper = ht.getLooper();
+        Handler h = new Handler(looper);
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                final String payload = getProfileUpdatePayload(profileEmail,profileFirstName,profileLastName, profileFullName, ecidValue);
+                Log.d(LOG_TAG, payload);
+                SampleAppNetworkConnection connection = new SampleAppNetworkConnection();
+                connection.connectPostUrl(MainApp.PLATFORM_DCS_URL, payload.getBytes());
+            }
+        });
     }
 
     private String getProfileUpdatePayload(String email, String firstName, String lastName, String fullName, String ecid) {
