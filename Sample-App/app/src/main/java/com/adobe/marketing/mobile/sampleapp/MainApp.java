@@ -89,7 +89,8 @@ public class MainApp extends Application {
                     Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
 
                     // To connect with Assurance session on start, put the URL for your session here
-                    Assurance.startSession("aepsampleapp://?adb_validation_sessionid=2d5e7f6b-aa79-4380-b615-fca97f207090");
+                    // Currently hardcoded is 'testAEPSampleArchanaSession1'
+                    Assurance.startSession("aepsdksampleapp://?adb_validation_sessionid=2898a9e3-a9ae-47cb-a2e0-7bd267fa70e5");
                 }
             });
         } catch (InvalidInitException e) {
