@@ -98,9 +98,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:text="Update Name in AEP profile"
+                    android:text="Update Email in AEP profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_profileData" />
+
+                <TextView
+                    android:id="@+id/tv_lbl_ecidLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This profile's ecid is"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_updateProfile"  />
+
+                <TextView
+                    android:id="@+id/tv_ecIDText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp"
+                    android:textIsSelectable="true"
+                    android:text=""
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lbl_ecidLabel" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

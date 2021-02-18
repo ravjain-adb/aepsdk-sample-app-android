@@ -11,6 +11,8 @@ package com.adobe.marketing.mobile.sampleapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -49,6 +51,7 @@ public class MessageTab extends Fragment {
     EditText etProfileName;
     Button btnSend;
     EditText etCustomEvent;
+    TextView tvECID;
 
     private static final String LOG_TAG = "Assurance Tab";
 
@@ -69,6 +72,7 @@ public class MessageTab extends Fragment {
         btnUpdateProfile = view.findViewById(R.id.btn_updateProfile);
         etCustomEvent = view.findViewById(R.id.et_customEvent);
         etProfileName = view.findViewById(R.id.et_profileData);
+        tvECID = view.findViewById(R.id.tv_ecIDText);
 
 
         //Setup button events
@@ -85,6 +89,24 @@ public class MessageTab extends Fragment {
             public void onClick(View v) {
                 updateProfile();
                 hideKeyboard(getActivity());
+            }
+        });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Identity.getExperienceCloudId(new AdobeCallback<String>() {
+            @Override
+            public void call(final String ecid) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String ecidValue = ecid;
+                        tvECID.setText(ecidValue);
+                    }
+                });
             }
         });
     }
@@ -136,6 +158,11 @@ public class MessageTab extends Fragment {
                 "                \"ECID\": [\n" +
                 "                    {\n" +
                 "                        \"id\" : \"" + ecid +"\"\n" +
+                "                    }\n" +
+                "                ],\n" +
+                "                \"Email\": [\n" +
+                "                    {\n" +
+                "                        \"id\" : \"" + profileName +"\"\n" +
                 "                    }\n" +
                 "                ]\n" +
                 "            },\n" +
