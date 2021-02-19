@@ -5,6 +5,7 @@
 - IMSOrg : 'AEM Assests Departmental Campaign'
 - Sandbox : 'CJM end 2 end testing'
 
+
 ### 1. Working in a different Sandbox in IMSOrg 'AEM Assets Departmental Campaign'
 
 #### 1.1 Make sure correct AEP Datasets and HTTP source inlets are configured 
@@ -22,7 +23,7 @@
 
 "name": "Android AEP SampleApp"
 
-- Contact bunkur@adobe.com to create the new preset for you.
+- Contact archanac@adobe.com to create the new preset for you.
 
 ### 2. Working in a different IMSOrg and Sandbox 
 
