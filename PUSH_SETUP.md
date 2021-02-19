@@ -1,4 +1,19 @@
-## Instructions for setting push notifications 
+## Testing Push Notifications 
+
+### Default config
+
+- IMSOrg : 'AEM Assests Departmental Campaign'
+- Sandbox : 'CJM end 2 end testing'
+- Griffon session : 'testAEPSampleArchanaSession1'
+
+- When you run the app it will ask for a 4 digit pin in the first view, enter '3255'.
+- Click on 'Messaging'
+- Click on 'Send' to send an experience event with custom string 'CustomAction' or a different string if you have setup your new action in JO. 
+-   Please note that clicking on 'Send' sends an experience event with the custom string. A pre-configured Journey is being used.
+- Enter an email address for personalization and connecting your ECID with an email profile
+
+
+## Instructions for setting push notifications on a different sandbox / IMSOrg
 
 ### Default config
 
