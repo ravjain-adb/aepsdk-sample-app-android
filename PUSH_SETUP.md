@@ -1,26 +1,61 @@
-# AEP SDK Sample App for Android
+## Instructions for setting push notifications 
 
-## About this Project
+### Default config
 
-This repository contains the Android sample app for the AEP SDK. 
+- IMSOrg : 'AEM Assests Departmental Campaign'
+- Sandbox : 'CJM end 2 end testing'
 
-## Prerequisites
+### 1. Working in a different Sandbox in IMSOrg 'AEM Assets Departmental Campaign'
 
-- Android Studio 3.+ with an Android emulator running 7.0+
-- JDK 8.+
-- Gradle 4.4+
+#### 1.1 Make sure correct AEP Datasets and HTTP source inlets are configured 
 
-## Installation
+- check [PushConstants.java](./Sample-App/app/src/main/java/com/adobe/marketing/mobile/sampleapp/PushConstants.java)
 
-- Open Android Studio and select `Open an existing project`  from the main screen or click `File -> Open...` .
-- Import the Sample-App/settings.gradle file into Android Studio.
-- Run Android `app` on the emulator or on real device.
 
-## Contributing
+#### 1.2 Make sure a "brand preset" is present in the sandbox
 
-Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
+- The sandbox should have a preset with the following mobile values
 
-## Licensing
+"appId": "com.adobe.marketing.mobile.sampleapp",
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
+"appPlatform": "fcm",
 
+"name": "Android AEP SampleApp"
+
+- Contact bunkur@adobe.com to create the new preset for you.
+
+### 2. Working in a different IMSOrg and Sandbox 
+
+#### 2.1 Make sure correct AEP Datasets and HTTP source inlets are configured 
+
+- check [PushConstants.java](./Sample-App/app/src/main/java/com/adobe/marketing/mobile/sampleapp/PushConstants.java)
+
+
+#### 2.2 Make sure a "brand preset" is present in the sandbox
+
+- The sandbox should have a preset with the following mobile values
+
+"appId": "com.adobe.marketing.mobile.sampleapp",
+
+"appPlatform": "fcm",
+
+"name": "Android AEP SampleApp"
+
+- Contact archanac@adobe.com to create the new preset for you.
+
+#### 2.3 Make sure a Launch property is setup
+
+- Create a new Edge Configuration
+- Select your sandbox, experience event and profile dataset in the edge configuration
+- Create a mobile property
+- Add 'Mobile Core' and 'AEP Edge' extensions
+- Select your edge configuration in the config for 'AEP Edge'
+- Publish this mobile property
+- Update the Launch Property ID in the constant "LAUNCH_ENVIRONMENT_FILE_ID" in [MainApp.java](./Sample-App/app/src/main/java/com/adobe/marketing/mobile/sampleapp/MainApp.java)
+
+
+#### 2.4 Make sure a Launch App-Configuration is setup
+
+- Ask archanac@adobe.com for the FCMV1 key
+- Create a new 'App-Config' with this FCMV1 key
+- Use package name as "com.adobe.marketing.mobile.sampleapp"
