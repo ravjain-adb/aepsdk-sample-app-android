@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+
 import android.app.Application;
 import android.util.Log;
 
@@ -48,12 +49,13 @@ public class MainApp extends Application {
 //    static final String CUSTOM_ACTION_DATASET = "";
 
     private static final String LAUNCH_ENVIRONMENT_FILE_ID="3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
-    static final String PLATFORM_DCS_URL="https://dcs.adobedc.net/collection/e28b94f7b68e32480ab10e4880bedb7a51c17b54e2275978cff915ae61f28070";
-    static final String PLATFORM_PROFILE_DATASET_ID="601460f70085b8194b6aac02";
-    static final String ORG_ID="906E3A095DC834230A495FD6@AdobeOrg";
-    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID="6014611ed9a0041949769e17";
-    static final String CUSTOM_ACTION_DATASET="60146f1f6fb6ae19481833cb";
-    static final String CUSTOM_PROFILE_DATASET="601a5860812a35194ac49baa";
+
+    static final String ORG_ID=PushConstants.ORG_ID;
+    static final String PLATFORM_DCS_URL=PushConstants.PROFILE_HTTP_DCS_URL;
+    static final String PLATFORM_PROFILE_DATASET_ID=PushConstants.PUSH_PROFILE_DATASET_ID;
+    static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID=PushConstants.PUSH_TRACKING_EXPERIENCE_EVENT_DATASET_ID;
+    static final String CUSTOM_ACTION_DATASET=PushConstants.CUSTOM_ACTION_DATASET;
+    static final String CUSTOM_PROFILE_DATASET=PushConstants.CUSTOM_PROFILE_DATASET;
 
     @Override
     public void onCreate() {
