@@ -15,12 +15,12 @@ public class PushConstants {
     // Step 2
     // The DatasetID of 'CJM Push Profile Dataset' from the specific sandbox for which is the app is being configured.
     // You should find this Dataset in the working sandbox - If the Sandbox is configured properly.
-    static final String PUSH_PROFILE_DATASET_ID="601460f70085b8194b6aac02";
+    static final String PUSH_PROFILE_DATASET_ID="600ab57dda8fff19494c582d";
 
     // Step 3
     // The DatasetID of 'CJM Push Tracking Experience Event Dataset' from the specific sandbox for which is the app is being configured.
     // You should find this Dataset in the working sandbox - If the Sandbox is configured properly.
-    static final String PUSH_TRACKING_EXPERIENCE_EVENT_DATASET_ID="6014611ed9a0041949769e17";
+    static final String PUSH_TRACKING_EXPERIENCE_EVENT_DATASET_ID="600ab57a2ecceb194ab30b89";
 
     // Step 4
     // The DatasetID that's required for this specific app, which allows you to send an experience event
