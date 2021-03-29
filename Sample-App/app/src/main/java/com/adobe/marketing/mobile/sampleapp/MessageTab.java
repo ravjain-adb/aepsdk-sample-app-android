@@ -118,7 +118,7 @@ public class MessageTab extends Fragment {
         xdm.put("eventType", "customAction");
         Map<String, Object> aemMap = new HashMap<>();
         aemMap.put("custom_action", customActionValue);
-        xdm.put("_aemonacpprodcampaign", aemMap);
+        xdm.put(PushConstants.ORG_KEY, aemMap);
 
         if (!customActionValue.isEmpty()) {
             ExperienceEvent event = new ExperienceEvent.Builder().setData(null).setXdmSchema(xdm, MainApp.CUSTOM_ACTION_DATASET).build();
