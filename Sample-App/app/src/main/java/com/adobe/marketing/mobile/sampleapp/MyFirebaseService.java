@@ -59,6 +59,9 @@ public class MyFirebaseService extends FirebaseMessagingService {
         Map<String, String> data = remoteMessage.getData();
 
         String title = null;
+        if (remoteMessage.getNotification() != null) {
+            title = remoteMessage.getNotification().getTitle();
+        }
         if (data.get("adb_title") != null) {
             title = data.get("adb_title");
             Log.d("MyFirebaseService", title);
@@ -66,6 +69,9 @@ public class MyFirebaseService extends FirebaseMessagingService {
 
 
         String body = null;
+        if (remoteMessage.getNotification() != null) {
+            body = remoteMessage.getNotification().getBody();
+        }
         if (data.get("adb_body") != null) {
             body = data.get("adb_body");
             Log.d("MyFirebaseService", body);
