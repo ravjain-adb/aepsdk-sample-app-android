@@ -6,21 +6,29 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.adobe.marketing.mobile.Messaging;
 import com.adobe.marketing.mobile.MobileCore;
+import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class MyFirebaseService extends FirebaseMessagingService {
     private final String CHANNEL_ID = "messaging_notification_channel";
@@ -48,22 +56,24 @@ public class MyFirebaseService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
+        Map<String, String> data = remoteMessage.getData();
+
         String title = null;
-        if (remoteMessage.getNotification() != null) {
-            title = remoteMessage.getNotification().getTitle();
+        if (data.get("adb_title") != null) {
+            title = data.get("adb_title");
+            Log.d("MyFirebaseService", title);
         }
 
 
         String body = null;
-        if (remoteMessage.getNotification() != null) {
-            body = remoteMessage.getNotification().getBody();
+        if (data.get("adb_body") != null) {
+            body = data.get("adb_body");
+            Log.d("MyFirebaseService", body);
         }
-
-        Map<String, String> data = remoteMessage.getData();
 
         Intent intent;
 
-        if (data.containsKey("deeplink")) {
+        if (data.containsKey("adb_uri") && data.containsKey("adb_a_type") && "DEEPLINK".equals(data.get("adb_a_type"))) {
             intent = new Intent(this, MessagingDeeplinkActivity.class);
         } else {
             intent = new Intent(this, MenuActivity.class);
@@ -83,6 +93,30 @@ public class MyFirebaseService extends FirebaseMessagingService {
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
+
+        if (data.containsKey("adb_image")) {
+            String url = data.get("adb_image");
+            if (url!= null && !url.isEmpty()) {
+                Future<Bitmap> bitmapTarget = Glide.with(this).asBitmap().load(url).submit();
+                try {
+                    Bitmap image = bitmapTarget.get();
+                    notificationBuilder.setLargeIcon(image).setStyle(new NotificationCompat.BigPictureStyle().bigPicture(image).bigLargeIcon(null));
+                } catch (ExecutionException | InterruptedException e) {
+                    Log.d("MyFirebaseService", e.getLocalizedMessage());
+                }
+            }
+        }
+
+        if (data.containsKey("adb_act")) {
+            String buttons = data.get("adb_act");
+            Gson gson = new Gson();
+            JsonArray array = gson.fromJson(buttons, JsonArray.class);
+            for (int i = 0; i< array.size(); i++) {
+                JsonObject obj = array.get(i).getAsJsonObject();
+                String buttonName = obj.get("label").getAsString();
+                notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_assurance_active, buttonName, null));
+            }
+        }
 
         notificationManager.notify(new Random().nextInt(100), notificationBuilder.build());
     }
