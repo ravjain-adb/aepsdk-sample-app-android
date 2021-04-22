@@ -40,7 +40,6 @@ public class PushConstants {
     // You can use an existing HTTP source, make sure it is configured to stream data into 'CJM Push Profile Dataset' and the 'AEPSampleApp Dataset'
     static final String PROFILE_HTTP_DCS_URL="https://dcs.adobedc.net/collection/e28b94f7b68e32480ab10e4880bedb7a51c17b54e2275978cff915ae61f28070";
 
-
     // Step 7 (Optional)
     static final String ORG_KEY ="_aemonacpprodcampaign";
 }

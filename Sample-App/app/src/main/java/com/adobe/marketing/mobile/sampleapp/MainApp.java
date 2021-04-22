@@ -37,22 +37,11 @@ import java.util.Map;
 public class MainApp extends Application {
 
     private static final String LOG_TAG = "MainApp";
-//    private static final String LAUNCH_ENVIRONMENT_FILE_ID = "";
-//    static final String PLATFORM_DCS_URL = "";
-//    // Profile dataset id used by messaging for syncing the push toke with profile
-//    static final String PLATFORM_PROFILE_DATASET_ID = "";
-//    // Org id needed by the messaging tab to send the custom event
-//    static final String ORG_ID = "";
-//    // Experience event dataset id used by messaging for sending tracking data
-//    private static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID = "";
-//    // Dataset id used by the messaging tab to send a custom action event.
-//    static final String CUSTOM_ACTION_DATASET = "";
-
     private static final String LAUNCH_ENVIRONMENT_FILE_ID="3149c49c3910/6a68c2e19c81/launch-4b2394565377-development";
 
+    // Constants for messaging
     static final String ORG_ID=PushConstants.ORG_ID;
     static final String PLATFORM_DCS_URL=PushConstants.PROFILE_HTTP_DCS_URL;
-    static final String PLATFORM_PROFILE_DATASET_ID=PushConstants.PUSH_PROFILE_DATASET_ID;
     static final String PLATFORM_EXPERIENCE_EVENT_DATASET_ID=PushConstants.PUSH_TRACKING_EXPERIENCE_EVENT_DATASET_ID;
     static final String CUSTOM_ACTION_DATASET=PushConstants.CUSTOM_ACTION_DATASET;
     static final String CUSTOM_PROFILE_DATASET=PushConstants.CUSTOM_PROFILE_DATASET;
@@ -69,6 +58,7 @@ public class MainApp extends Application {
             Analytics.registerExtension();
             UserProfile.registerExtension();
             Identity.registerExtension();
+            com.adobe.marketing.mobile.edge.identity.Identity.registerExtension();
             Lifecycle.registerExtension();
             Signal.registerExtension();
             Edge.registerExtension();
@@ -83,11 +73,11 @@ public class MainApp extends Application {
 
                     MobileCore.lifecycleStart(null);
 
+                    // Updating the configuration with experience event dataset id for messaging
                     Map<String, Object> map = new HashMap<>();
-                    map.put("messaging.dccs", PLATFORM_DCS_URL);
-                    map.put("messaging.profileDataset", PLATFORM_PROFILE_DATASET_ID);
                     map.put("messaging.eventDataset", PLATFORM_EXPERIENCE_EVENT_DATASET_ID);
                     MobileCore.updateConfiguration(map);
+
                     Log.d(LOG_TAG, "AEP Mobile SDK is initialized");
 
                     // To connect with Assurance session on start, put the URL for your session here
@@ -96,7 +86,7 @@ public class MainApp extends Application {
                 }
             });
         } catch (InvalidInitException e) {
-            e.printStackTrace();
+            Log.d(LOG_TAG, "Exception while initiating adobe sdks. Error " + e.getMessage());
         }
 
         FirebaseMessaging.getInstance().getToken()

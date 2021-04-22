@@ -3,7 +3,6 @@ package com.adobe.marketing.mobile.sampleapp;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,17 +13,17 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.adobe.marketing.mobile.AEPMessagingFCMPushPayload;
 import com.adobe.marketing.mobile.Messaging;
 import com.adobe.marketing.mobile.MobileCore;
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -49,10 +48,19 @@ public class MyFirebaseService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
+        // Use the AEPMessagingFCMPushPayload object to extract the payload attributes for creating notification
+        AEPMessagingFCMPushPayload payload = new AEPMessagingFCMPushPayload(remoteMessage);
+
+        // Setting the channel
+        String channelId = payload.getChannelId() == null ? CHANNEL_ID : payload.getChannelId();
+
+        // Understanding whats the importance from priority
+        int importance = getImportanceFromPriority(payload.getNotificationPriority());
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(channelId, CHANNEL_NAME, importance);
             notificationManager.createNotificationChannel(channel);
         }
 
@@ -62,8 +70,8 @@ public class MyFirebaseService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             title = remoteMessage.getNotification().getTitle();
         }
-        if (data.get("adb_title") != null) {
-            title = data.get("adb_title");
+        if (payload.getTitle() != null) {
+            title = payload.getTitle();
             Log.d("MyFirebaseService", title);
         }
 
@@ -72,14 +80,14 @@ public class MyFirebaseService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             body = remoteMessage.getNotification().getBody();
         }
-        if (data.get("adb_body") != null) {
-            body = data.get("adb_body");
+        if (payload.getBody() != null) {
+            body = payload.getBody();
             Log.d("MyFirebaseService", body);
         }
 
         Intent intent;
 
-        if (data.containsKey("adb_uri") && data.containsKey("adb_a_type") && "DEEPLINK".equals(data.get("adb_a_type"))) {
+        if (payload.getActionUri() != null  && payload.getActionType() == AEPMessagingFCMPushPayload.ActionType.DEEPLINK) {
             intent = new Intent(this, MessagingDeeplinkActivity.class);
         } else {
             intent = new Intent(this, MenuActivity.class);
@@ -100,30 +108,42 @@ public class MyFirebaseService extends FirebaseMessagingService {
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
 
-        if (data.containsKey("adb_image")) {
-            String url = data.get("adb_image");
-            if (url!= null && !url.isEmpty()) {
-                Future<Bitmap> bitmapTarget = Glide.with(this).asBitmap().load(url).submit();
-                try {
-                    Bitmap image = bitmapTarget.get();
-                    notificationBuilder.setLargeIcon(image).setStyle(new NotificationCompat.BigPictureStyle().bigPicture(image).bigLargeIcon(null));
-                } catch (ExecutionException | InterruptedException e) {
-                    Log.d("MyFirebaseService", e.getLocalizedMessage());
-                }
+        String url = payload.getImageUrl();
+        if (url!= null && !url.isEmpty()) {
+            Future<Bitmap> bitmapTarget = Glide.with(this).asBitmap().load(url).submit();
+            try {
+                Bitmap image = bitmapTarget.get();
+                notificationBuilder.setLargeIcon(image).setStyle(new NotificationCompat.BigPictureStyle().bigPicture(image).bigLargeIcon(null));
+            } catch (ExecutionException | InterruptedException e) {
+                Log.d("MyFirebaseService", e.getLocalizedMessage());
             }
         }
 
-        if (data.containsKey("adb_act")) {
-            String buttons = data.get("adb_act");
-            Gson gson = new Gson();
-            JsonArray array = gson.fromJson(buttons, JsonArray.class);
-            for (int i = 0; i< array.size(); i++) {
-                JsonObject obj = array.get(i).getAsJsonObject();
-                String buttonName = obj.get("label").getAsString();
+        if (payload.getActionButtons() != null) {
+            List<AEPMessagingFCMPushPayload.ActionButton> buttons = payload.getActionButtons();
+            for (int i = 0; i< buttons.size(); i++) {
+                AEPMessagingFCMPushPayload.ActionButton obj = buttons.get(i);
+                String buttonName = obj.getLabel();
                 notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_assurance_active, buttonName, null));
             }
         }
 
         notificationManager.notify(new Random().nextInt(100), notificationBuilder.build());
+    }
+
+    private int getImportanceFromPriority(int priority) {
+        switch (priority) {
+            case NotificationCompat.PRIORITY_DEFAULT:
+                return NotificationManager.IMPORTANCE_DEFAULT;
+            case NotificationCompat.PRIORITY_MIN:
+                return NotificationManager.IMPORTANCE_MIN;
+            case NotificationCompat.PRIORITY_LOW:
+                return NotificationManager.IMPORTANCE_LOW;
+            case NotificationCompat.PRIORITY_HIGH:
+                return NotificationManager.IMPORTANCE_HIGH;
+            case NotificationCompat.PRIORITY_MAX:
+                return NotificationManager.IMPORTANCE_MAX;
+            default: return NotificationManager.IMPORTANCE_NONE;
+        }
     }
 }
