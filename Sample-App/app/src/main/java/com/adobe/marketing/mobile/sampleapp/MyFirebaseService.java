@@ -9,15 +9,13 @@ import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.adobe.marketing.mobile.AEPMessagingFCMPushPayload;
 import com.adobe.marketing.mobile.Messaging;
+import com.adobe.marketing.mobile.MessagingPushPayload;
 import com.adobe.marketing.mobile.MobileCore;
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -49,7 +47,7 @@ public class MyFirebaseService extends FirebaseMessagingService {
 
     private void sendNotification(RemoteMessage remoteMessage) {
         // Use the AEPMessagingFCMPushPayload object to extract the payload attributes for creating notification
-        AEPMessagingFCMPushPayload payload = new AEPMessagingFCMPushPayload(remoteMessage);
+        MessagingPushPayload payload = new MessagingPushPayload(remoteMessage);
 
         // Setting the channel
         String channelId = payload.getChannelId() == null ? CHANNEL_ID : payload.getChannelId();
@@ -87,7 +85,7 @@ public class MyFirebaseService extends FirebaseMessagingService {
 
         Intent intent;
 
-        if (payload.getActionUri() != null  && payload.getActionType() == AEPMessagingFCMPushPayload.ActionType.DEEPLINK) {
+        if (payload.getActionUri() != null  && payload.getActionType() == MessagingPushPayload.ActionType.DEEPLINK) {
             intent = new Intent(this, MessagingDeeplinkActivity.class);
         } else {
             intent = new Intent(this, MenuActivity.class);
@@ -120,9 +118,9 @@ public class MyFirebaseService extends FirebaseMessagingService {
         }
 
         if (payload.getActionButtons() != null) {
-            List<AEPMessagingFCMPushPayload.ActionButton> buttons = payload.getActionButtons();
+            List<MessagingPushPayload.ActionButton> buttons = payload.getActionButtons();
             for (int i = 0; i< buttons.size(); i++) {
-                AEPMessagingFCMPushPayload.ActionButton obj = buttons.get(i);
+                MessagingPushPayload.ActionButton obj = buttons.get(i);
                 String buttonName = obj.getLabel();
                 notificationBuilder.addAction(new NotificationCompat.Action(R.drawable.ic_assurance_active, buttonName, null));
             }

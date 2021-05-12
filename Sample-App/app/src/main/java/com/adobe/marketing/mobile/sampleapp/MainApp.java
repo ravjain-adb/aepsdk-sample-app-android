@@ -76,6 +76,10 @@ public class MainApp extends Application {
                     // Updating the configuration with experience event dataset id for messaging
                     Map<String, Object> map = new HashMap<>();
                     map.put("messaging.eventDataset", PLATFORM_EXPERIENCE_EVENT_DATASET_ID);
+
+                    // Use this for running the edge with staging environment
+                    //map.put("edge.environment", "int");
+
                     MobileCore.updateConfiguration(map);
 
                     Log.d(LOG_TAG, "AEP Mobile SDK is initialized");

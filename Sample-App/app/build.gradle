@@ -32,9 +32,11 @@ dependencies {
     implementation 'com.adobe.marketing.mobile:userprofile:1.1.0'
     implementation 'com.adobe.marketing.mobile:sdk-core:1.5.8'
     implementation 'com.adobe.marketing.mobile:assurance:1.0.1'
-    implementation 'com.adobe.marketing.mobile:edge:1.1.0'
+    // Using edge aar until next release (AAR allows customising edge environment)
+    //implementation 'com.adobe.marketing.mobile:edge:1.1.0'
     implementation 'com.adobe.marketing.mobile:analyticsedge:1+'
     implementation 'com.adobe.marketing.mobile:edgeidentity:1.0.0'
+    implementation 'com.adobe.marketing.mobile:messaging:1.0.0-beta-1'
 
     implementation platform('com.google.firebase:firebase-bom:26.4.0')
     implementation 'com.google.firebase:firebase-messaging'
